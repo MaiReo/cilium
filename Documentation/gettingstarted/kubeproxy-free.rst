@@ -42,7 +42,8 @@ CIDR and skip the ``kube-proxy`` add-on:
 
     .. code:: bash
 
-      kubeadm init --pod-network-cidr=10.217.0.0/16 --skip-phases=addon/kube-proxy
+      kubeadm init --pod-network-cidr=10.
+      .0.0/16 --skip-phases=addon/kube-proxy
 
   .. group-tab:: K8s 1.15 and older
 
@@ -100,7 +101,8 @@ configuration.
         --namespace kube-system \\
         --set global.kubeProxyReplacement=strict \\
         --set global.k8sServiceHost=API_SERVER_IP \\
-        --set global.k8sServicePort=API_SERVER_PORT
+        --set global.k8sServicePort=API_SERVER_PORT \\
+        --set global.ipam.operator.clusterPoolIPv4PodCIDR=10.217.0.0/16
 
 This will install Cilium as a CNI plugin with the BPF kube-proxy replacement to
 implement handling of Kubernetes services of type ClusterIP, NodePort, ExternalIPs
