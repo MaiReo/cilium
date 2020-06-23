@@ -77,6 +77,9 @@ func (res *CmdRes) SendToLog(quietMode bool) {
 
 	logformat := "cmd: %q exitCode: %d duration: %s stdout:\n%s\n"
 	log := fmt.Sprintf(logformat, res.cmd, res.GetExitCode(), res.duration, res.stdout.String())
+	if res.err != nil {
+		log = fmt.Sprintf("%serr:\n%s\n", log, res.err)
+	}
 	if res.stderr.Len() > 0 {
 		log = fmt.Sprintf("%sstderr:\n%s\n", log, res.stderr.String())
 	}
@@ -324,8 +327,9 @@ func (res *CmdRes) OutputPrettyPrint() string {
 
 	}
 	return fmt.Sprintf(
-		"Exitcode: %d \nStdout:\n %s\nStderr:\n %s\n",
+		"Exitcode: %d \nErr: %s\nStdout:\n %s\nStderr:\n %s\n",
 		res.GetExitCode(),
+		res.err,
 		format(res.GetStdOut()),
 		format(res.GetStdErr()))
 }
